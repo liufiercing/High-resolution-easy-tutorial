@@ -11,15 +11,15 @@ modle_name = '1wedge1';
 [ref]= reflectivity_modling(N, modle_name, trace);
 %% wavelet
 dt=0.001;
-fm=40;   trun_time=0.04;  t=-trun_time:dt:trun_time;
+fm=30;   trun_time=0.04;  t=-trun_time:dt:trun_time;
 w=(1-2*(pi*fm*t).^2).*exp(-(pi*fm*t).^2);
 nWaveSampPoint=length(w);
 W_temp=convmtx(w',length(ref(:,1)));
 WW=W_temp(((nWaveSampPoint-1)/2)+1:end-((nWaveSampPoint-1)/2),:);     % full_freq
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% 单道褶积
+%% 褶积
 seis=WW*ref;
-seis=pnoise(seis,0.01);   %%加噪
+seis=pnoise(seis,0.1);   %%加噪
 %% WW*r=seis  ,r  不适定问题  |a-b| + mu|a|
 % I = eye(100)
 % r = pinv(WW'*WW + I)*WW'*seis;
@@ -51,6 +51,5 @@ subplot(1,3,3)
 title('反演结果')
 wigb(ref)
 
-exit
 
 %%
